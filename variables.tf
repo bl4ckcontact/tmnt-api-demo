@@ -6,7 +6,7 @@ variable "aws_profile" {
 variable "aws_region" {
   description = "AWS Region to deploy the TMNT API stack"
   type = string
-  default = "us-west-1"
+  default = "us-west-2"
 }
 
 variable "aws_account_id" {

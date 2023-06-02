@@ -24,6 +24,38 @@ resource "aws_api_gateway_resource" "badguys" {
   path_part   = "badguys"
 }
 
+resource "aws_api_gateway_method" "any" {
+  rest_api_id   = aws_api_gateway_rest_api.tmnt_api.id
+  resource_id   = aws_api_gateway_resource.turtles.id
+  http_method   = "ANY"
+  authorization = "NONE"
+  authorizer_id = aws_api_gateway_resource.turtles.id
+}
+
+resource "aws_api_gateway_integration" "apigw_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.tmnt_api.id
+  resource_id             = aws_api_gateway_resource.turtles.id
+  http_method             = aws_api_gateway_method.any.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  #uri                     = "arn:aws:apigateway:${var.aws_region}:lambda:path/2015-03-31/functions/${aws_lambda_function.tmnt_lambda.arn}/invocations"
+  uri                     = module.lambda.aws_lambda_function_invoke_arn
+}
+
+resource "aws_api_gateway_deployment" "apigw_deployment" {
+  rest_api_id = aws_api_gateway_rest_api.tmnt_api.id
+  stage_name  = "prod"
+  depends_on = [aws_api_gateway_integration.apigw_integration]
+
+  variables = {
+    resources = join(",", [aws_api_gateway_resource.turtles.id, aws_api_gateway_resource.goodguys.id, aws_api_gateway_resource.badguys.id])
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_api_gateway_authorizer" "apigw_authorizer" {
   name                   = "apigw_authorizer"
   rest_api_id            = aws_api_gateway_rest_api.tmnt_api.id
@@ -39,14 +71,6 @@ resource "aws_api_gateway_authorizer" "apigw_authorizer" {
 #   authorization = "COGNITO_USER_POOLS"
 #   authorizer_id = aws_api_gateway_authorizer.apigw_authorizer.id
 # }
-
-resource "aws_api_gateway_method" "any" {
-  rest_api_id   = aws_api_gateway_rest_api.tmnt_api.id
-  resource_id   = aws_api_gateway_resource.turtles.id
-  http_method   = "ANY"
-  authorization = "NONE"
-  authorizer_id = aws_api_gateway_resource.turtles.id
-}
 
 # resource "aws_api_gateway_method" "get_turtle" {
 #   rest_api_id  = aws_api_gateway_rest_api.tmnt_api.id

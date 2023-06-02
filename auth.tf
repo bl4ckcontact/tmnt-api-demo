@@ -1,19 +1,12 @@
 resource "aws_cognito_user_pool" "cognito_user_pool" {
   name = "tmnt-cognito-user-pool"
-  auto_verified_attributes = ["email"]
+  admin_create_user_config {
+    allow_admin_create_user_only = false
+  }
 }
 
-# resource "aws_cognito_identity_provider" "cognito-idp" {
-#   user_pool_id = aws_cognito_user_pool.cognito-user-pool.id
-#   provider_name = "Google"
-#   provider_type = "Google"
-
-#   provider_details = {
-#     authorize_scopes = "email profile openid"
-#     client_id = var.google_client_id
-#     client_secret = var.google_client_secret
-#   }
-
-#   attribute_mapping = "email"
-#   username = "sub"
-# }
+resource "aws_cognito_user" "cognito_user" {
+  user_pool_id  = aws_cognito_user_pool.cognito_user_pool.id
+  username      = "tmnt-user"
+  #password      = "tmnt-password"
+}

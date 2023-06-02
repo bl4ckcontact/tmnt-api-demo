@@ -13,7 +13,6 @@ resource "aws_s3_bucket_acl" "lambda_bucket_acl" {
   depends_on  = [aws_s3_bucket_ownership_controls.lambda_bucket_ownership_controls]
   bucket      = aws_s3_bucket.lambda_tmnt_api.id
   acl         = "private"
-
 }
 
 data "archive_file" "lambda_tmnt_api" {

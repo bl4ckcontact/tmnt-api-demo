@@ -13,3 +13,13 @@ variable "aws_account_id" {
   description = "AWS Account ID"
   type = string
 }
+
+variable "cognito_callback_url" {
+  description = "Cognito callback URL"
+  type = string
+}
+
+variable "cognito_logout_url" {
+  description = "Cognito logout URL"
+  type = string
+}

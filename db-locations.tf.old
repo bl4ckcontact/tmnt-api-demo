@@ -1,0 +1,44 @@
+resource "aws_dynamodb_table_item" "dynamodb-tmnt-table-item-location-the-sewer" {
+  table_name = aws_dynamodb_table.dynamodb-tmnt-table.name
+  hash_key   = aws_dynamodb_table.dynamodb-tmnt-table.hash_key
+  range_key  = aws_dynamodb_table.dynamodb-tmnt-table.range_key
+  item = <<ITEM
+{
+  "type": {"S": "location"},
+  "name": {"S": "the_sewer"},
+  "geographic_location": {"S": "hero"},
+  "home_to": {"S": "teenage_mutant_ninja_turtles","S": "splinter"},
+  "adjectives": {"S": "dark","S": "dank","S": "wet","S": "smelly"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "dynamodb-tmnt-table-item-location-osaka" {
+  table_name = aws_dynamodb_table.dynamodb-tmnt-table.name
+  hash_key   = aws_dynamodb_table.dynamodb-tmnt-table.hash_key
+  range_key  = aws_dynamodb_table.dynamodb-tmnt-table.range_key
+  item = <<ITEM
+{
+  "type": {"S": "location"},
+  "name": {"S": "osaka"},
+  "geographic_location": {"S": "japan"},
+  "home_to": {"S": "oroku_saki","S": "the_foot_clan"},
+  "adjectives": {"S": "crowded","S": "busy","S": "loud","S": "bright","S": "traditional"}
+}
+ITEM
+}
+
+resource "aws_dynamodb_table_item" "dynamodb-tmnt-table-item-location-new-york-city" {
+  table_name = aws_dynamodb_table.dynamodb-tmnt-table.name
+  hash_key   = aws_dynamodb_table.dynamodb-tmnt-table.hash_key
+  range_key  = aws_dynamodb_table.dynamodb-tmnt-table.range_key
+  item = <<ITEM
+{
+  "type": {"S": "location"},
+  "name": {"S": "new_york_city"},
+  "geographic_location": {"S": "united_states"},
+  "home_to": {"S": "april_o_neil","S": "casey_jones","S": "teenage_mutant_ninja_turtles","S": "the_foot_clan"},
+  "adjectives": {"S": "big","S": "crowded","S": "busy","S": "loud","S": "bright","S": "crime_ridden"}
+}
+ITEM
+}

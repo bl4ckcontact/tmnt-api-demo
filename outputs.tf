@@ -87,18 +87,33 @@
 #   value       = module.iam_user.keybase_secret_key_pgp_message
 # }
 
-# ### 
-output "aws_api_gateway_rest_api" {
-  description = "API Gateway REST API Object"
-  value       = aws_api_gateway_rest_api.tmnt_api
+output "api_gateway_rest_api" {
+  description = "API Gateway REST API root url"
+  value       = aws_api_gateway_deployment.apigw_deployment.invoke_url
 }
 
-output "aws_api_gateway_resource" {
-  description = "API Gateway Resource Object - 'turtles'"
-  value       = aws_api_gateway_resource.turtles
+output "api_gateway_resource_path_characters" {
+  description = "API Gateway path for TMNT characters"
+  value       = aws_api_gateway_resource.resource_root.path
 }
 
-output "aws_api_gateway_method" {
-  description = "API Gateway Method Object"
-  value       = aws_api_gateway_method.any
+# output "api_gateway_resource_path_locations" {
+#   description = "API Gateway path from root for TMNT locations"
+#   value       = aws_api_gateway_resource.locations.path
+# }
+
+output "cognito_user_pool_client_id" {
+  description = "Cognito User Pool Client"
+  value       = aws_cognito_user_pool_client.user_pool_client.id
 }
+
+output "cognito_user_pool_client_name" {
+  description = "Cognito User Pool Client"
+  value       = aws_cognito_user_pool_client.user_pool_client.name
+}
+
+output "cognito_login_url" {
+  description = "Cognito Login URL"
+  value       = "https://${aws_cognito_user_pool_domain.user_pool_domain.id}.auth.${var.aws_region}.amazoncognito.com/login?client_id=${aws_cognito_user_pool_client.user_pool_client.id}&response_type=token&redirect_uri=http://localhost"
+}
+#https://tmnt-user-pool-domain.auth.us-west-2.amazoncognito.com/login?client_id=21lirpadmihivven76qffrtj5h&response_type=code&redirect_uri=http://localhost

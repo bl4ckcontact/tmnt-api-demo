@@ -11,7 +11,8 @@ variable "aws_region" {
 variable "aws_api_gateway_rest_api" {
   description = "AWS API Gateway REST API Object passed from the parent resource layer in the stack"
   type = object({
-    id = string
+    id            = string
+    execution_arn = string
   })
 }
 

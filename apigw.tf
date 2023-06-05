@@ -54,7 +54,7 @@ resource "aws_api_gateway_integration" "apigw_integration_post" {
 
 resource "aws_api_gateway_deployment" "apigw_deployment" {
   rest_api_id = aws_api_gateway_rest_api.tmnt_api.id
-  stage_name  = "prod"
+  stage_name  = "dev"
   depends_on = [
     aws_api_gateway_method.get,
     aws_api_gateway_method.post,
